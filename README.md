@@ -1,52 +1,147 @@
 # Web Code Challenge
-## Scenario
 
-We have a page in our system called *'Flight Inspirations'* where user can see suggestion for his upcoming travel.
-You need to ceate an admin dashboard to view and edit the 'Flight Inspirations'.
-
-## What is already in the codebase:
-You have Tanstack table. Each table cell is editable and after updating any cell (or multiple cells) you will see the editted cells in highlighted color. 
-You are able to save the cells and the data in the table is persisted. This functionality should remain working.
-<img width="1576" alt="Screenshot 2025-02-13 at 2 57 33 PM" src="https://github.com/user-attachments/assets/e83cf53d-65e2-443b-a8af-1102c82bc720" />
-
-## Assignment:
-I. Register on Amadeus Developer and get access to their free open-source APIs we will use in this challenge:
-Step-by-step guide to get the keys https://developers.amadeus.com/register
-
-II. Create a form with two inputs: one for the city code and another one for the date. Add a submit button or icon.
-
-III. Using the values from the form do the API call to fetch Flight Inspirations 
-http://developers.amadeus.com/self-service/category/flights/api-doc/flight-inspiration-search/api-reference
+A modern web application built with React frontend and serverless backend, featuring flight search functionality with drag-and-drop table capabilities.
 
 
-IV. Display the results of the call in the table you have in this codebase. Feel free to edit any code necessary, its just a blueprint. The only thing that you should pay attention is that cell edit/hightlight/save functionality is working.
+## 🛠️ Tech Stack
 
-V. After data is displayed make sure its styled nicely. 
+### Frontend
+- React 18 with TypeScript
+- Material-UI (MUI) for UI components
+- React Query for data fetching and caching
+- React Hook Form for form management
+- Drag and Drop Kit for table interactions
+- Day.js for date handling
 
-VI. Add drag and drop functionality to the columns of the table. (You should be able to switch position of the columns: eg. 5 -> 1, 1 -> 2, etc).
+### Backend
+- Node.js with TypeScript
+- Serverless Framework
+- AWS Lambda functions
+- Amadeus API integration for flight data
+- Axios for HTTP requests
 
-VII. Add client side pagination.
+## 📦 Project Structure
 
-VII. Optimize the state management of the app.
+```
+web-code-challenge/
+├── packages/
+│   ├── frontend/          # React application
+│   │   ├── src/
+│   │   │   ├── components/    # Reusable UI components
+│   │   │   ├── hooks/         # Custom React hooks
+│   │   │   ├── services/      # API services
+│   │   │   ├── types/         # TypeScript type definitions
+│   │   │   └── utils/         # Utility functions
+│   │   └── package.json
+│   └── backend/           # Serverless backend
+│       ├── src/
+│       │   ├── handlers/      # Lambda function handlers
+│       │   └── services/      # Business logic services
+│       └── package.json
+├── .eslintrc.json         # ESLint configuration
+├── .prettierrc           # Prettier configuration
+└── package.json          # Root package.json with workspaces
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 16+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd web-code-challenge
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+
+rename .env.example to .env and enter your credentials 
+
+4. Start the development servers:
+```bash
+# Start both frontend and backend (backend builds first)
+npm run dev
+
+# Or start them individually
+npm run dev:frontend
+npm run dev:backend  # Builds backend first, then starts dev server
+```
+
+## 📝 Available Scripts
+
+### Root Level
+- `npm run dev` - Start both frontend and backend in development mode (backend builds first)
+- `npm run build` - Build both packages
+- `npm run build:backend` - Build only the backend package
+- `npm run build:frontend` - Build only the frontend package
+- `npm run lint` - Run ESLint on all packages
+- `npm run lint:fix` - Fix ESLint issues automatically
+
+### Frontend
+- `npm run start` - Start the React development server
+- `npm run build` - Build the production bundle
+- `npm run test` - Run tests
+
+### Backend
+- `npm run dev` - Start serverless offline
+- `npm run build` - Compile TypeScript
+- `npm run format` - Format code with Prettier
+
+## 🔧 Code Quality
+
+This project includes comprehensive code quality tools:
+
+- **ESLint**: Code linting with TypeScript and React rules
+- **Prettier**: Code formatting for consistent style
+- **TypeScript**: Static type checking
+- **React Query ESLint Plugin**: Best practices for React Query
+
+### Linting Rules
+- No console.log statements in production code
+- Consistent import ordering
+- Proper React hooks usage
+- TypeScript strict mode
+
+## 🏗️ Architecture
+
+### Frontend Architecture
+- **Component-based**: Modular, reusable components
+- **Hook-based**: Custom hooks for business logic
+- **Type-safe**: Full TypeScript coverage
+- **State Management**: React Query for server state, local state for UI
+
+### Backend Architecture
+- **Serverless**: AWS Lambda functions
+- **Service Layer**: Business logic separation
+- **API Integration**: Amadeus API for flight data
+- **Error Handling**: Comprehensive error handling and logging
 
 
-## Conditions
-- You should think about the UI and UX of your app.
-- You should think about the state management of your app.
-- You should consume the api endpoint mentioned and not use it as internal json file.
-- You should build this application using Reactjs and Typescript.
+## 📚 API Documentation
 
-## What we are looking for
+### Flight Search Endpoints
 
-- **Simple, clear, readable code** How well structured it is? Clear separation of concerns? Can anyone just look at it and get the idea to
-what is being done? Does it follow any standards?
-- **Correctness** Does the application do what it promises? Can we find bugs or trivial flaws?
-- **Memory efficiency** How will it behave in case of large datasets? Are results cached? Do you have debounce on your search?
-- **Testing** How well tested your application is? Can you give some metrics?
+#### GET /amadeus/flight-inspiration
+Search for flight inspiration based on origin and departure date.
 
+**Parameters:**
+- `origin` (string): Origin airport/city code
+- `departureDate` (string): Departure date in YYYY-MM-DD format
 
-## Questions & Delivery
+#### GET /amadeus/search-locations
+Search for airports and cities by keyword.
 
-If you have any questions to this challenge, please do reach out to us.
-
-The challenge should be delivered as a link to a public git repository (github.com or bitbucket.com are preferred).
+**Parameters:**
+- `keyword` (string): Search term
+- `subType` (optional): Filter by type (AIRPORT, CITY, POINT_OF_INTEREST)
+- `countryCode` (optional): ISO country code
+- `page` (optional): Page number for pagination

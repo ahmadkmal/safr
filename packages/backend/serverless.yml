@@ -1,0 +1,55 @@
+service: web-code-challenge-backend-dev
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-1
+  environment:
+    NODE_ENV: development
+    AMADEUS_BASE_URL: https://test.api.amadeus.com
+    AMADEUS_CLIENT_ID: ${env:AMADEUS_CLIENT_ID}
+    AMADEUS_CLIENT_SECRET: ${env:AMADEUS_CLIENT_SECRET}
+    FRONTEND_URL: http://localhost:3000
+
+functions:
+  health:
+    handler: dist/handlers/health.handler
+    events:
+      - http:
+          path: health
+          method: get
+          cors: true
+
+  getToken:
+    handler: dist/handlers/amadeus.handler
+    events:
+      - http:
+          path: amadeus/token
+          method: get
+          cors: true
+
+  getFlightInspiration:
+    handler: dist/handlers/amadeus.handler
+    events:
+      - http:
+          path: amadeus/flight-inspiration
+          method: get
+          cors: true
+
+  searchLocations:
+    handler: dist/handlers/amadeus.handler
+    events:
+      - http:
+          path: amadeus/search-locations
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: ${env:BACK_END_PORT, 3001}
+    noPrependStageInUrl: true
+    useChildProcesses: true 

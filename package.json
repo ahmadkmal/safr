@@ -1,43 +1,35 @@
 {
-  "name": "react-typescript",
+  "name": "web-code-challenge",
   "version": "1.0.0",
-  "description": "React and TypeScript example starter project",
+  "description": "Web code challenge with React frontend and Express backend",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [
     "typescript",
     "react",
-    "starter"
+    "express",
+    "monorepo"
   ],
-  "main": "src/index.tsx",
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.4",
-    "@mui/material": "^6.4.4",
-    "@mui/x-date-pickers": "^7.26.0",
-    "@tanstack/react-table": "^8.21.2",
-    "dayjs": "^1.11.13",
-    "loader-utils": "3.2.1",
-    "lodash": "^4.17.21",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-scripts": "5.0.1"
-  },
   "devDependencies": {
-    "@types/lodash": "^4.17.15",
-    "@types/react": "18.2.38",
-    "@types/react-dom": "18.2.15",
-    "typescript": "4.4.4"
+    "@tanstack/eslint-plugin-query": "^5.81.2",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.42.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "lerna": "^8.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "dev": "lerna run build --scope=@web-code-challenge/backend && lerna run dev --parallel",
+    "dev:frontend": "lerna run dev --scope=@web-code-challenge/frontend",
+    "dev:backend": "lerna run build --scope=@web-code-challenge/backend && lerna run dev --scope=@web-code-challenge/backend",
+    "start:frontend": "lerna run start --scope=@web-code-challenge/frontend",
+    "start:backend": "lerna run start --scope=@web-code-challenge/backend",
+    "lint": "lerna run lint --parallel",
+    "lint:fix": "lerna run lint:fix --parallel",
+    "build": "lerna run build --parallel",
+    "build:backend": "lerna run build --scope=@web-code-challenge/backend",
+    "build:frontend": "lerna run build --scope=@web-code-challenge/frontend"
+  }
 }
